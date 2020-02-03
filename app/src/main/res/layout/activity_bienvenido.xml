@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="70dp"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".Bienvenido">
+
+    <TextView
+        android:id="@+id/nameRegis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:inputType="text"
+        android:text="Antonio" />
+
+    <TextView
+        android:id="@+id/userRegis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:inputType="text"
+        android:text="Antonio99" />
+
+
+    <TextView
+        android:id="@+id/correoRegis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:inputType="textEmailAddress"
+        android:text="antonio@gmail.com" />
+
+    <TextView
+        android:id="@+id/edadRegis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:inputType="number"
+        android:text="Mantenimiento inversion" />
+
+    <Button
+        android:id="@+id/btnBienvenido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Continuar" />
+
+
+</LinearLayout>
