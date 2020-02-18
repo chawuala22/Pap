@@ -1,4 +1,4 @@
-/*package com.example.pap;
+package com.example.pap;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class TableDynamic {
+public class TableDynamicMR {
 
     private TableLayout tableLayout;
     private Context context;
@@ -19,7 +19,8 @@ public class TableDynamic {
     private int indexC;
     private int indexR;
 
-    public TableDynamic(TableLayout tableLayout, Context context) {
+
+    public TableDynamicMR(TableLayout tableLayout, Context context) {
         this.tableLayout = tableLayout;
         this.context = context;
     }
@@ -28,6 +29,7 @@ public class TableDynamic {
         this.header=header;
         createHeader();
     }
+
 
     public void addData(ArrayList<String[]> data){
         this.data=data;
@@ -38,12 +40,14 @@ public class TableDynamic {
         tableRow = new TableRow(context);
     }
 
+
     private void newCell(){
         textCell= new TextView(context);
         textCell.setGravity(Gravity.CENTER);
         textCell.setTextSize(25);
     }
 
+//CREAMOS ENCABEZADO
     private void createHeader(){
 
         indexC=0;
@@ -56,42 +60,46 @@ public class TableDynamic {
         tableLayout.addView(tableRow);
     }
 
+//CREAMOS LA TABLA
     private void createDataTable(){
         String info;
-        for(indexR=1;indexR<=header.length;indexR++){
+        for (indexR = 1; indexR<=data.size() ; indexR++) {
             newRow();
-            for(indexC=0;indexC<header.length;indexC++){
-            newCell();
-            String[] row=data.get(indexR-1);
-            info=(indexC<row.length)?row[indexC]:"";
-            textCell.setText(info);
-            tableRow.addView(textCell,newtableRowParams());
+            for (indexC = 0; indexC < header.length; indexC++) {
+                newCell();
+                String[] row = data.get(indexR -1);
+                info = (indexC < row.length) ? row[indexC] : "";
+                textCell.setText(info);
+                tableRow.addView(textCell, newtableRowParams());
             }
             tableLayout.addView(tableRow);
         }
     }
 
+//AÑADIMOS LOS ITEMS
     public void addItems(String[]item){
+
         String info;
         data.add(item);
         indexC=0;
         newRow();
-        while(indexC<header.length){
+        while (indexC<header.length){
             newCell();
-            info=(indexC<item.length)?item[indexC++]:"";
+            info = (indexC < item.length) ? item[indexC++] : "";
             textCell.setText(info);
-            tableRow.addView(textCell,newtableRowParams());
+            tableRow.addView(textCell, newtableRowParams());
         }
         tableLayout.addView(tableRow,data.size()-1);
-
     }
 
-    private TableRow.LayoutParams newtableRowParams(){
+
+//AQUI ORGANIZAMOS LA TABLA
+    private TableRow.LayoutParams newtableRowParams() {
         TableRow.LayoutParams params = new TableRow.LayoutParams();
-        params.setMargins(1,1,1,1);
-        params.weight =1;
+        params.setMargins(1, 1, 1, 1);
+        params.weight = 1;
         return params;
-    }
+
+          }
 
 }
-*/

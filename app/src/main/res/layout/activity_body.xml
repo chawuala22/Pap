@@ -9,10 +9,11 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
             <LinearLayout
@@ -116,7 +117,7 @@
                         android:layout_marginLeft="20dp" />
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/poste"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -125,7 +126,7 @@
                         android:inputType="textPersonName" />
 
                     <EditText
-                        android:id="@+id/editText2"
+                        android:id="@+id/cantidad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -134,38 +135,37 @@
                         android:inputType="phone" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/buttonsave"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
+                        android:onClick="save"
                         android:text="Guardar" />
 
                 </LinearLayout>
 
-                <LinearLayout
+                <TableLayout
+                    android:id="@+id/table"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent" />
 
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="HERE DYNAMIC TABLE" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/next2"
-                        android:layout_marginTop="340dp"
-                        android:layout_marginLeft="300dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NEXT"/>
-
-
+                        android:layout_marginLeft="322dp"
+                        android:layout_marginTop="340dp"
+                        android:text="->" />
                 </LinearLayout>
 
 
             </LinearLayout>
         </ScrollView>
     </HorizontalScrollView>
+
 </LinearLayout>

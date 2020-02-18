@@ -25,11 +25,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Body extends AppCompatActivity {
 
-    private EditText bCircuito, bDescargo, bDate ;
+    private EditText bCircuito, bDescargo, bDate, bPoste, bCantidad ;
     private int bYearini,bMonthini,bDayini, sYearini, sMonthini, sDayini;
     private Button nextdes;
 
@@ -39,10 +41,12 @@ public class Body extends AppCompatActivity {
     private TableLayout tableLayout;
     private Spinner spDescrip, spUnd, spType;
 
-    private String[] header={"Codigo","Elemento","Unidad","Poste","Cantidad"};
+    private String[] header={"1","2","3","4"};
     private ArrayList<String[]> rows=new ArrayList<>();
+    private TableDynamicMR tableDynamicMR;
+    private String unidad, descripcion;
+
     DatabaseReference mDatabase;
-   // private TableDynamic tableDynamic;
 
 
     @Override
@@ -50,26 +54,32 @@ public class Body extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_body);
 
-       // tableLayout=findViewById(R.id.table);
+        tableLayout=(TableLayout)findViewById(R.id.table);
         bDate=findViewById(R.id.date);
         sMonthini = calendar.get(Calendar.MONTH);
         sDayini = calendar.get(Calendar.DAY_OF_MONTH);
         sYearini= calendar.get(Calendar.YEAR);
 
         bCircuito=findViewById(R.id.circuito);
-        spType=findViewById(R.id.typematerial);
         bDescargo=findViewById(R.id.descargo);
+        bCantidad=findViewById(R.id.cantidad);
+        bPoste=findViewById(R.id.poste);
+        spType=findViewById(R.id.typematerial);
         spDescrip=findViewById(R.id.spinnerdescrip);
         spUnd=findViewById(R.id.spinner);
         spType=findViewById(R.id.typematerial);
         nextdes=findViewById(R.id.next2);
+
+
 
         mDatabase= FirebaseDatabase.getInstance().getReference();
         loadDescription();
         loadUnd();
         loadtype();
 
-
+        tableDynamicMR = new TableDynamicMR(tableLayout,getApplicationContext());
+        tableDynamicMR.addHeader(header);
+        tableDynamicMR.addData(getClients());
 
         bDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,22 +89,45 @@ public class Body extends AppCompatActivity {
         });
 
 
-        nextdes.setOnClickListener(new View.OnClickListener() {
+     nextdes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Body.this,Descripcion.class);
                 startActivity(intent);
                 finish();
             }
-        });
-
-
-
-       // tableDynamic = new TableDynamic(tableLayout,getApplicationContext());
-        //tableDynamic.addHeader(header);
-        //tableDynamic.addData(getClients());
+    });
 
     }
+
+
+
+    public void save(View view){
+        String[]item=new String[]{bCantidad.getText().toString(),bPoste.getText().toString(),unidad,descripcion};
+        tableDynamicMR.addItems(item);
+
+
+        String circuito = bCircuito.getText().toString();
+        String fecha= bDate.getText().toString();
+        String poste=bPoste.getText().toString();
+        String descargo= bDescargo.getText().toString();
+        int cantidad= Integer.parseInt(bCantidad.getText().toString());
+
+        Map<String,Object> datosedittext = new HashMap<>();
+        datosedittext.put("circuitos",circuito);
+        datosedittext.put("fecha",fecha);
+        datosedittext.put("poste",poste);
+        datosedittext.put("descargo",descargo);
+        datosedittext.put("cantidad",cantidad);
+        mDatabase.child("circuito").push().setValue(datosedittext);
+
+    }
+
+    private ArrayList<String[]> getClients(){
+        rows.add(new String[]{"","","",""});
+        return rows;
+    }
+
 
     //-------------------------------- PARA EL CALENDARIO
 
@@ -166,9 +199,9 @@ public class Body extends AppCompatActivity {
 
                 if(dataSnapshot.exists()){
                     for (DataSnapshot ds: dataSnapshot.getChildren()){
-                        String nombreUnd = ds.child("nombre").getValue().toString();
+                        unidad = ds.child("nombre").getValue().toString();
 
-                        unds.add(new Und(nombreUnd));
+                        unds.add(new Und(unidad));
                     }
 
                     ArrayAdapter<Und> arrayAdapter = new ArrayAdapter<>(Body.this,android.R.layout.simple_dropdown_item_1line,unds);
@@ -195,9 +228,9 @@ public class Body extends AppCompatActivity {
 
                 if(dataSnapshot.exists()){
                     for (DataSnapshot ds: dataSnapshot.getChildren()){
-                        String nombredescrp = ds.child("nombre").getValue().toString();
+                        descripcion = ds.child("nombre").getValue().toString();
 
-                        descriptions.add(new Description(nombredescrp));
+                        descriptions.add(new Description(descripcion));
                     }
 
                   ArrayAdapter<Description> arrayAdapter = new ArrayAdapter<>(Body.this,android.R.layout.simple_dropdown_item_1line,descriptions);
@@ -213,15 +246,5 @@ public class Body extends AppCompatActivity {
         });
 
     }
-
-
-   /* public void save(View view){
-        String[]item=new String[]{txtcodigo.getText().toString(),txtelemnto.getText().toString()};
-        tableDynamic.addItems(item);
-    }
-    private ArrayList<String[]> getClients(){
-    rows.add(new String[]{"1","Pedro"});
-    return rows;
-    }*/
 
 }
