@@ -12,6 +12,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:background="#000">
 
         <LinearLayout
@@ -23,64 +24,175 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="157dp"
+                android:layout_marginBottom="10dp"
                 app:srcCompat="@drawable/bienvenido" />
 
-            <TextView
-                android:id="@+id/nameRegis"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:inputType="text"
-                android:text="Nombre"
-                android:textColor="#FFFFFF" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/correoRegis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:gravity="center"
-                android:inputType="textEmailAddress"
-                android:text="Correo"
-                android:textColor="#FFFF" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/userRegis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:gravity="center"
-                android:inputType="text"
-                android:text="Usuario"
-                android:textColor="#FFFF" />
+                    <TextView
+                        android:id="@+id/textViewname"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="#FFFF"
+                        android:text="Nombre:  "
+                        android:textColor="#FFFF" />
 
-            <TextView
-                android:id="@+id/edadRegis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="Proceso"
-                android:textColor="#FFFF" />
+                    <TextView
+                        android:id="@+id/nameRegis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:text="Nombre"
+                        android:textColor="#FFFFFF" />
 
-            <TextView
-                android:id="@+id/contraRegis"
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
                 android:gravity="center"
-                android:inputType="textEmailAddress"
-                android:text="Contraseña"
-                android:textColor="#FFFF" />
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewcorreo"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="#FFFF"
+                        android:text="Correo: "
+                        android:textColor="#FFFF" />
+
+                    <TextView
+                        android:id="@+id/correoRegis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="textEmailAddress"
+                        android:text="Correo"
+                        android:textColor="#FFFF" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewusuario"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="#FFFF"
+                        android:text="Usuario: "
+                        android:textColor="#FFFF" />
+
+                    <TextView
+                        android:id="@+id/userRegis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="text"
+                        android:text="Usuario"
+                        android:textColor="#FFFF" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewproceso"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="#FFFF"
+                        android:text="Proceso: "
+                        android:textColor="#FFFF" />
+
+                    <TextView
+                        android:id="@+id/edadRegis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="Proceso"
+                        android:textColor="#FFFF" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewcontraseña"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="#FFFF"
+                        android:text="Contraseña: "
+                        android:textColor="#FFFF" />
+
+                    <TextView
+                        android:id="@+id/contraRegis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:inputType="textEmailAddress"
+                        android:text="Contraseña"
+                        android:textColor="#FFFF" />
+
+                </LinearLayout>
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/btnBienvenido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="60dp"
                 android:background="#2B8077"
                 android:gravity="center"
                 android:text="Continuar"

@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class Registrarse extends AppCompatActivity {
 
-    Button registrar;
+    Button registrar,devolver;
     EditText editTextUser,edipass,edimail,ediname,ediprocess;
 
 
@@ -51,6 +51,7 @@ public class Registrarse extends AppCompatActivity {
         edimail= findViewById(R.id.correoRegis);
         ediprocess=findViewById(R.id.procesoRegis);
         registrar=findViewById(R.id.btnRegis1);
+        devolver=findViewById(R.id.exitaccount);
 //----------------------------------------//
 
         registrar.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +72,7 @@ public class Registrarse extends AppCompatActivity {
 
                 if(!name.isEmpty() && !user.isEmpty() && !processo.isEmpty()){
 
-
+                    Toast.makeText(Registrarse.this, "Go!", Toast.LENGTH_SHORT).show();
 
                 }else{
                     Toast.makeText(Registrarse.this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
@@ -96,7 +97,7 @@ public class Registrarse extends AppCompatActivity {
 
                 //REGISTRAR USUARIO
 
-                mAuth.createUserWithEmailAndPassword(user,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
@@ -125,6 +126,18 @@ public class Registrarse extends AppCompatActivity {
 
             }
         });
+
+
+        devolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Registrarse.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
     }
 
 

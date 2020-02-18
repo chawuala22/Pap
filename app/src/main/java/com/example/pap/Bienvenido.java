@@ -18,6 +18,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Bienvenido extends AppCompatActivity {
 
+
+    //CREAMOS VARIABLES
+
     private Button next;
     private TextView emailtv, nombretv, usuariotv,procesotv,contratv;
     private FirebaseAuth mAuth;
@@ -30,6 +33,7 @@ public class Bienvenido extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bienvenido);
 
+        //INSTANCIAMOS LOS ITEMS DE LA VISTA, ES DECIR LE ASIGAMOS LA VARIABLE ANTES CREADA
 
         emailtv=findViewById(R.id.correoRegis);
         nombretv=findViewById(R.id.nameRegis);
@@ -37,25 +41,23 @@ public class Bienvenido extends AppCompatActivity {
         procesotv=findViewById(R.id.edadRegis);
         contratv=findViewById(R.id.contraRegis);
 
-        mAuth=FirebaseAuth.getInstance();
-        mDatabase= FirebaseDatabase.getInstance().getReference();
-
+        mAuth=FirebaseAuth.getInstance(); // CONEXION A LA VERIFICACION EN FIREBASE
+        mDatabase= FirebaseDatabase.getInstance().getReference(); // CONEXION BD EN FIREBASE
+        obtenerInfo();
 
         next=findViewById(R.id.btnBienvenido);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //METODO QUE HACE PASAR DE UNA VISTA A OTRA
                 Intent intent = new Intent(Bienvenido.this,Body.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-        obtenerInfo();
     }
 
 
-    private void obtenerInfo(){
+    private void obtenerInfo(){  //METODO PARA OBTENER LOS ELEMENTOS ANTES REGISTRADOS Y MOSTRARLOS
 
         String id= mAuth.getCurrentUser().getUid();
         mDatabase.child("user").child(id).addValueEventListener(new ValueEventListener() {

@@ -7,20 +7,42 @@
     android:orientation="vertical"
     tools:context=".Descripcion">
 
-
-    <EditText
-        android:id="@+id/editText3"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:ems="10"
-        android:hint="Escriba aquí una descripcion de lo que realizó"
-        android:inputType="textPersonName" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_marginLeft="150dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enviar" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
+            <EditText
+                android:id="@+id/txtDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:ems="10"
+                android:hint="Ingrese una pequeña descripción"
+                android:inputType="textPersonName"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnEnviar"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Enviar" />
+
+                <Button
+                    android:id="@+id/btnCerrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cerrar sesión" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
