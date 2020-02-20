@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -41,10 +42,10 @@ public class Body extends AppCompatActivity {
     private TableLayout tableLayout;
     private Spinner spDescrip, spUnd, spType;
 
-    private String[] header={"1","2","3","4"};
+    private String[] header={"CODIGO|MATERIAL","UNIDAD","POSTE","CANTIDAD"};
     private ArrayList<String[]> rows=new ArrayList<>();
     private TableDynamicMR tableDynamicMR;
-    private String unidad, descripcion;
+    private String unidad, descripcion,fechita,mspSelecionada ="",mspUndselect="",mspMaterial="";
 
     DatabaseReference mDatabase;
 
@@ -103,19 +104,19 @@ public class Body extends AppCompatActivity {
 
 
     public void save(View view){
-        String[]item=new String[]{bCantidad.getText().toString(),bPoste.getText().toString(),unidad,descripcion};
+        String[]item=new String[]{mspMaterial,mspUndselect,bPoste.getText().toString(),bCantidad.getText().toString()};
         tableDynamicMR.addItems(item);
 
 
         String circuito = bCircuito.getText().toString();
-        String fecha= bDate.getText().toString();
+        fechita= bDate.getText().toString();
         String poste=bPoste.getText().toString();
         String descargo= bDescargo.getText().toString();
         int cantidad= Integer.parseInt(bCantidad.getText().toString());
 
         Map<String,Object> datosedittext = new HashMap<>();
         datosedittext.put("circuitos",circuito);
-        datosedittext.put("fecha",fecha);
+        datosedittext.put("fecha",fechita);
         datosedittext.put("poste",poste);
         datosedittext.put("descargo",descargo);
         datosedittext.put("cantidad",cantidad);
@@ -174,6 +175,17 @@ public class Body extends AppCompatActivity {
 
                     ArrayAdapter<TypeM> arrayAdapter = new ArrayAdapter<>(Body.this,android.R.layout.simple_dropdown_item_1line,typeMS);
                     spType.setAdapter(arrayAdapter);
+                    spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            mspSelecionada=  parent.getItemAtPosition(position).toString();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 }
 
             }
@@ -206,6 +218,21 @@ public class Body extends AppCompatActivity {
 
                     ArrayAdapter<Und> arrayAdapter = new ArrayAdapter<>(Body.this,android.R.layout.simple_dropdown_item_1line,unds);
                     spUnd.setAdapter(arrayAdapter);
+                    spUnd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                            mspUndselect=parent.getItemAtPosition(position).toString();
+
+
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 }
 
             }
@@ -235,6 +262,17 @@ public class Body extends AppCompatActivity {
 
                   ArrayAdapter<Description> arrayAdapter = new ArrayAdapter<>(Body.this,android.R.layout.simple_dropdown_item_1line,descriptions);
                     spDescrip.setAdapter(arrayAdapter);
+                    spDescrip.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            mspMaterial = parent.getItemAtPosition(position).toString();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 }
 
             }

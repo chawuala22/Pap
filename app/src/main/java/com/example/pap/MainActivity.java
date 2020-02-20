@@ -58,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (password.length() < 6) {
-                    edipass.setError("La contraseña debe ser mayor a 6 caracteres");
-                }
-
 
                 mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

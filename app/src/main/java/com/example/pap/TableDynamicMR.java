@@ -44,7 +44,7 @@ public class TableDynamicMR {
     private void newCell(){
         textCell= new TextView(context);
         textCell.setGravity(Gravity.CENTER);
-        textCell.setTextSize(25);
+        textCell.setTextSize(18);
     }
 
 //CREAMOS ENCABEZADO
