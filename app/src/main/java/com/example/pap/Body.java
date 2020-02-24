@@ -45,7 +45,7 @@ public class Body extends AppCompatActivity {
     private String[] header={"CODIGO|MATERIAL","UNIDAD","POSTE","CANTIDAD"};
     private ArrayList<String[]> rows=new ArrayList<>();
     private TableDynamicMR tableDynamicMR;
-    private String unidad, descripcion,fechita,mspSelecionada ="",mspUndselect="",mspMaterial="";
+    private String unidad, descripcion,fechita,mspSelecionada ="",mspUndselect="",mspMaterial="",poste;
 
     DatabaseReference mDatabase;
 
@@ -94,6 +94,14 @@ public class Body extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Body.this,Descripcion.class);
+                intent.putExtra("fecha",fechita);
+                intent.putExtra("descargo",bDescargo.getText().toString());
+                intent.putExtra("circuito",bCircuito.getText().toString());
+                intent.putExtra("tipo_material",mspSelecionada);
+                intent.putExtra("cantidad",bCantidad.getText().toString());
+
+
+
                 startActivity(intent);
                 finish();
             }
@@ -120,6 +128,7 @@ public class Body extends AppCompatActivity {
         datosedittext.put("poste",poste);
         datosedittext.put("descargo",descargo);
         datosedittext.put("cantidad",cantidad);
+
         mDatabase.child("circuito").push().setValue(datosedittext);
 
     }
@@ -160,7 +169,6 @@ public class Body extends AppCompatActivity {
 
     public void loadtype(){
 
-
         final List<TypeM> typeMS = new ArrayList<>();
         mDatabase.child("type").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -172,11 +180,13 @@ public class Body extends AppCompatActivity {
 
                         typeMS.add(new TypeM(nombreType));
                     }
-
+                    //LLENO EL SPINER CON LA BD
                     ArrayAdapter<TypeM> arrayAdapter = new ArrayAdapter<>(Body.this,android.R.layout.simple_dropdown_item_1line,typeMS);
                     spType.setAdapter(arrayAdapter);
+
                     spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
+                        //METODO PARA SELECCIONAR EL ITEM DEL SPINNER
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             mspSelecionada=  parent.getItemAtPosition(position).toString();
                         }
@@ -203,7 +213,6 @@ public class Body extends AppCompatActivity {
 
     public void loadUnd(){
 
-
         final List<Und> unds = new ArrayList<>();
         mDatabase.child("undss").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -223,9 +232,6 @@ public class Body extends AppCompatActivity {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                             mspUndselect=parent.getItemAtPosition(position).toString();
-
-
-
                         }
 
                         @Override

@@ -29,8 +29,7 @@ public class Descripcion extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText resena;
     private Button logout, send;
-    private TextView dfecha;
-    String nombre, fecha1,descargo,circuito;
+    String nombre, fecha1,descargo,circuito, tipomaterial, cantidad;
 
     String correo1 = "antoniovb22@gmail.com";
     String corre2 ="soymigue15@gmail.com";
@@ -46,10 +45,14 @@ public class Descripcion extends AppCompatActivity {
 
         resena=findViewById(R.id.txtDescripcion);
         send=findViewById(R.id.btnEnviar);
-        dfecha=findViewById(R.id.dfechas);
+        logout=findViewById(R.id.btnCerrar);
         obtenerInfo();
-        loadbody();
 
+        fecha1=getIntent().getStringExtra("fecha");
+        descargo=getIntent().getStringExtra("descargo");
+        circuito=getIntent().getStringExtra("circuito");
+        tipomaterial=getIntent().getStringExtra("tipo_material");
+        cantidad=getIntent().getStringExtra("cantidad");
 
 
 
@@ -58,15 +61,12 @@ public class Descripcion extends AppCompatActivity {
 
     public void send(View view) {
 
-        String reseñaa = resena.getText().toString();
-        Map<String,Object> datosedittext1= new HashMap<>();
-        datosedittext1.put("reseña",reseñaa);
-        mDatabase.child("circuito").push().setValue(datosedittext1);
+        String resena2=resena.getText().toString();
 
-
-        String[] to = { correo1, corre2 };
+                String[] to = { correo1, corre2 };
         Send(to, "INVENTARIO MATERIAL POSTE A POSTE OBRAS EN MANTENIMIENTO POR "+nombre,
-                "FECHA: "+dfecha+"\n"+"DESCARGO O INCIDENCIA: "+descargo+"\n"+"CIRCUITO O LINEA: "+circuito+"\n\n");
+                "FECHA: "+fecha1+"\n"+"DESCARGO O INCIDENCIA: "+descargo+"\n"+"CIRCUITO O LINEA: "+circuito+"\n"
+                        +"TIPO DE MATERIALES: "+tipomaterial+"\n\n"+"RESEÑA: "+resena2);
 
     }
 
@@ -92,28 +92,6 @@ public class Descripcion extends AppCompatActivity {
 
 
     }
-
-
-
-    private void loadbody(){
-
-        mDatabase.child("circuito").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                    infopojo user = dataSnapshot.getValue(infopojo.class);
-                    fecha1=user.getFecha();
-                      Log.e("fecha:", "" + fecha1);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
 
 
 

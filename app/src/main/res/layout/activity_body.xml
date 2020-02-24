@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="descargo"
-                        android:inputType="textPersonName" />
+                        android:inputType="phone"  />
 
                 </LinearLayout>
 
