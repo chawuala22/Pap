@@ -3,11 +3,11 @@ package com.example.pap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,13 +41,16 @@ public class Body extends AppCompatActivity {
     private TableLayout tableLayout;
     private Spinner spDescrip, spUnd, spType;
 
-    private String[] header={"CODIGO|MATERIAL","UNIDAD","POSTE","CANTIDAD"};
+    private String[] header={"CODIGO|MATERIAL ","UNIDAD ","POSTE ","CANTIDAD "};
     private ArrayList<String[]> rows=new ArrayList<>();
     private TableDynamicMR tableDynamicMR;
-    private String unidad, descripcion,fechita,mspSelecionada ="",mspUndselect="",mspMaterial="",poste;
+    private String unidad, descripcion,fechita,mspSelecionada ="",mspUndselect="",mspMaterial="";
+    private ArrayList<String> h1 = new ArrayList<String>();
+
+
+    private String[] item;
 
     DatabaseReference mDatabase;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,12 @@ public class Body extends AppCompatActivity {
         loadUnd();
         loadtype();
 
+        int size=h1.size();
+        String h11 ="";
+        for (int i=0; i<size;i++){
+            h11=h1.get(i);
+        }
+
         tableDynamicMR = new TableDynamicMR(tableLayout,getApplicationContext());
         tableDynamicMR.addHeader(header);
         tableDynamicMR.addData(getClients());
@@ -90,32 +98,33 @@ public class Body extends AppCompatActivity {
         });
 
 
-     nextdes.setOnClickListener(new View.OnClickListener() {
+        final String finalH1 = h11;
+        nextdes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Body.this,Descripcion.class);
                 intent.putExtra("fecha",fechita);
                 intent.putExtra("descargo",bDescargo.getText().toString());
                 intent.putExtra("circuito",bCircuito.getText().toString());
-                intent.putExtra("tipo_material",mspSelecionada);
                 intent.putExtra("cantidad",bCantidad.getText().toString());
-
-
-
+                intent.putExtra("material", finalH1);
                 startActivity(intent);
                 finish();
             }
     });
-
+     
     }
 
 
 
     public void save(View view){
-        String[]item=new String[]{mspMaterial,mspUndselect,bPoste.getText().toString(),bCantidad.getText().toString()};
+        item=new String[]{mspMaterial,mspUndselect,bPoste.getText().toString(),bCantidad.getText().toString()};
         tableDynamicMR.addItems(item);
+        loadtable();
 
+    }
 
+    private void loadtable() {
         String circuito = bCircuito.getText().toString();
         fechita= bDate.getText().toString();
         String poste=bPoste.getText().toString();
@@ -128,10 +137,14 @@ public class Body extends AppCompatActivity {
         datosedittext.put("poste",poste);
         datosedittext.put("descargo",descargo);
         datosedittext.put("cantidad",cantidad);
-
+        datosedittext.put("material",mspMaterial);
+        datosedittext.put("unidad",mspUndselect);
         mDatabase.child("circuito").push().setValue(datosedittext);
-
     }
+
+    //SE GUARDA EL BLOQUE DE DATOS DE LA VISTA BODY (LA TABLA Y EL ENCABEZADO DEL PAP)
+
+
 
     private ArrayList<String[]> getClients(){
         rows.add(new String[]{"","","",""});
@@ -165,7 +178,11 @@ public class Body extends AppCompatActivity {
     }
 
 
+
+
+    //AQUI SE ALIMENTAN LOS SPINNER CON LA BD
     //-----------------------------------------------------------------------
+    //AQUI SE CARGA INSTALADO- RETIRADO
 
     public void loadtype(){
 
@@ -210,7 +227,7 @@ public class Body extends AppCompatActivity {
     }
 
 
-
+        //AQUI SE CARGA UNIDAD - METROS
     public void loadUnd(){
 
         final List<Und> unds = new ArrayList<>();
@@ -252,6 +269,9 @@ public class Body extends AppCompatActivity {
 
     }
 
+
+    //AQUI SE CARGA MATERIAL
+
     public  void loadDescription(){
 
         final List<Description> descriptions = new ArrayList<>();
@@ -271,7 +291,7 @@ public class Body extends AppCompatActivity {
                     spDescrip.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            mspMaterial = parent.getItemAtPosition(position).toString();
+                            h1.add(mspMaterial = parent.getItemAtPosition(position).toString());
                         }
 
                         @Override
@@ -288,7 +308,7 @@ public class Body extends AppCompatActivity {
 
             }
         });
-
     }
+
 
 }

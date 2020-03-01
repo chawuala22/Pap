@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,12 @@ public class Descripcion extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText resena;
     private Button logout, send;
-    String nombre, fecha1,descargo,circuito, tipomaterial, cantidad;
+    String nombre, fecha1,descargo,circuito, sptype, h11;
+
+    private ArrayList<String> cantidades = new ArrayList<String>();
+    private ArrayList<String> postes = new ArrayList<String>();
+    private ArrayList<String> tipomaterial = new ArrayList<String>();
+    private ArrayList<String> spunidad = new ArrayList<String>();
 
     String correo1 = "antoniovb22@gmail.com";
     String corre2 ="soymigue15@gmail.com";
@@ -47,14 +53,23 @@ public class Descripcion extends AppCompatActivity {
         send=findViewById(R.id.btnEnviar);
         logout=findViewById(R.id.btnCerrar);
         obtenerInfo();
+        loadtable();
+
 
         fecha1=getIntent().getStringExtra("fecha");
         descargo=getIntent().getStringExtra("descargo");
-        circuito=getIntent().getStringExtra("circuito");
-        tipomaterial=getIntent().getStringExtra("tipo_material");
-        cantidad=getIntent().getStringExtra("cantidad");
+        circuito=getIntent().getStringExtra("circuitos");
+        sptype=getIntent().getStringExtra("sptype");
+        h11=getIntent().getStringExtra("material");
 
 
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Descripcion.this,MainActivity.class ));
+            }
+        });
 
 
     }
@@ -63,14 +78,36 @@ public class Descripcion extends AppCompatActivity {
 
         String resena2=resena.getText().toString();
 
+        int size=postes.size();
+        String c1="";
+        String p1="";
+        String u1="";
+        String m1="";
+
+        for(int i=0;i<size;i++ ){
+
+            c1+= cantidades.get(i)+"\n";
+            p1+=postes.get(i)+"\n";
+            u1+=spunidad.get(i)+"\n";
+            m1+=tipomaterial.get(i)+"\n";
+
+
+        }
+Log.e(",mmmmmmmmmm",""+c1);
+
                 String[] to = { correo1, corre2 };
         Send(to, "INVENTARIO MATERIAL POSTE A POSTE OBRAS EN MANTENIMIENTO POR "+nombre,
-                "FECHA: "+fecha1+"\n"+"DESCARGO O INCIDENCIA: "+descargo+"\n"+"CIRCUITO O LINEA: "+circuito+"\n"
-                        +"TIPO DE MATERIALES: "+tipomaterial+"\n\n"+"RESEÑA: "+resena2);
+
+                "FECHA: "+fecha1+"\n"+
+                         "DESCARGO O INCIDENCIA: "+descargo+"\n" +
+                         "CIRCUITO O LINEA: "+circuito+"\n"
+                        +"TIPO DE MATERIAL: "+sptype+"\n\n"+
+                        "CODIGO | MATERIAL |"+"|    UNIDAD    |"+"|    POSTE   |"+"|    CANTIDAD    |\n"+
+                                 p1+ c1 +u1+h11+m1+
+
+                "RESEÑA: \n"+resena2);
 
     }
-
-
 
 
     private void obtenerInfo(){
@@ -94,12 +131,9 @@ public class Descripcion extends AppCompatActivity {
     }
 
 
-
     private void Send(String[] to, String asunto, String mensaje){
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
-        //String[] to = direccionesEmail;
-        //String[] cc = copias;
         emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, asunto);
         emailIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
@@ -111,6 +145,30 @@ public class Descripcion extends AppCompatActivity {
         }catch (android.content.ActivityNotFoundException ex){
             Toast.makeText(Descripcion.this,"No Email",Toast.LENGTH_SHORT);
         }
+
+    }
+
+
+    private void loadtable(){
+        mDatabase.child("circuito").addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(final DataSnapshot snapshot: dataSnapshot.getChildren()){
+
+                     cantidades.add(dataSnapshot.child(snapshot.getKey()).child("cantidad").getValue().toString());
+                     postes.add (dataSnapshot.child(snapshot.getKey()).child("poste").getValue().toString());
+                     spunidad.add (dataSnapshot.child(snapshot.getKey()).child("unidad").getValue().toString());
+                     tipomaterial.add (dataSnapshot.child(snapshot.getKey()).child("material").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
