@@ -41,6 +41,7 @@ public class Descripcion extends AppCompatActivity {
     String corre2 ="soymigue15@gmail.com";
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +53,15 @@ public class Descripcion extends AppCompatActivity {
         resena=findViewById(R.id.txtDescripcion);
         send=findViewById(R.id.btnEnviar);
         logout=findViewById(R.id.btnCerrar);
+
         obtenerInfo();
         loadtable();
 
-
+//Explicar ahora
         fecha1=getIntent().getStringExtra("fecha");
         descargo=getIntent().getStringExtra("descargo");
-        circuito=getIntent().getStringExtra("circuitos");
-        sptype=getIntent().getStringExtra("sptype");
+        circuito=getIntent().getStringExtra("circuito");
+        sptype=getIntent().getStringExtra("seleccion");
         h11=getIntent().getStringExtra("material");
 
 
@@ -83,17 +85,17 @@ public class Descripcion extends AppCompatActivity {
         String p1="";
         String u1="";
         String m1="";
+        String w="";
 
         for(int i=0;i<size;i++ ){
 
-            c1+= cantidades.get(i)+"\n";
-            p1+=postes.get(i)+"\n";
-            u1+=spunidad.get(i)+"\n";
-            m1+=tipomaterial.get(i)+"\n";
-
+            c1+= cantidades.get(i)+"  ";
+            w="\t";
+            p1+=postes.get(i)+"  ";
+            u1+=spunidad.get(i)+"  ";
+            m1+=tipomaterial.get(i)+"  ";
 
         }
-Log.e(",mmmmmmmmmm",""+c1);
 
                 String[] to = { correo1, corre2 };
         Send(to, "INVENTARIO MATERIAL POSTE A POSTE OBRAS EN MANTENIMIENTO POR "+nombre,
@@ -102,9 +104,7 @@ Log.e(",mmmmmmmmmm",""+c1);
                          "DESCARGO O INCIDENCIA: "+descargo+"\n" +
                          "CIRCUITO O LINEA: "+circuito+"\n"
                         +"TIPO DE MATERIAL: "+sptype+"\n\n"+
-                        "CODIGO | MATERIAL |"+"|    UNIDAD    |"+"|    POSTE   |"+"|    CANTIDAD    |\n"+
-                                 p1+ c1 +u1+h11+m1+
-
+                        "CODIGO | MATERIAL: \t"+ m1 +"\n" +"UNIDAD: \t"+u1 +"\n"+ "POSTE: \t"+p1 +"\n"+ "CANTIDAD: \t"+c1 +"\n"+
                 "RESEÑA: \n"+resena2);
 
     }

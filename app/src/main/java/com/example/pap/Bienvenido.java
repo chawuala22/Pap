@@ -46,6 +46,7 @@ public class Bienvenido extends AppCompatActivity {
         obtenerInfo();
 
         next=findViewById(R.id.btnBienvenido);
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //METODO QUE HACE PASAR DE UNA VISTA A OTRA

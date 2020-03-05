@@ -44,7 +44,7 @@ public class Body extends AppCompatActivity {
     private String[] header={"CODIGO|MATERIAL ","UNIDAD ","POSTE ","CANTIDAD "};
     private ArrayList<String[]> rows=new ArrayList<>();
     private TableDynamicMR tableDynamicMR;
-    private String unidad, descripcion,fechita,mspSelecionada ="",mspUndselect="",mspMaterial="";
+    private String unidad, descripcion,fechita,mspSelecionada ="",mspUndselect="",mspMaterial="",circuito;
     private ArrayList<String> h1 = new ArrayList<String>();
 
 
@@ -103,11 +103,13 @@ public class Body extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Body.this,Descripcion.class);
+
                 intent.putExtra("fecha",fechita);
                 intent.putExtra("descargo",bDescargo.getText().toString());
                 intent.putExtra("circuito",bCircuito.getText().toString());
                 intent.putExtra("cantidad",bCantidad.getText().toString());
                 intent.putExtra("material", finalH1);
+                intent.putExtra("seleccion",mspSelecionada);
                 startActivity(intent);
                 finish();
             }
@@ -125,7 +127,7 @@ public class Body extends AppCompatActivity {
     }
 
     private void loadtable() {
-        String circuito = bCircuito.getText().toString();
+        circuito = bCircuito.getText().toString();
         fechita= bDate.getText().toString();
         String poste=bPoste.getText().toString();
         String descargo= bDescargo.getText().toString();
@@ -270,9 +272,11 @@ public class Body extends AppCompatActivity {
     }
 
 
+
     //AQUI SE CARGA MATERIAL
 
     public  void loadDescription(){
+
 
         final List<Description> descriptions = new ArrayList<>();
         mDatabase.child("descripcion").addListenerForSingleValueEvent(new ValueEventListener() {
