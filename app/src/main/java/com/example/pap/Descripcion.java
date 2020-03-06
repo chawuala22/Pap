@@ -38,7 +38,7 @@ public class Descripcion extends AppCompatActivity {
     private ArrayList<String> spunidad = new ArrayList<String>();
 
     String correo1 = "antoniovb22@gmail.com";
-    String corre2 ="soymigue15@gmail.com";
+    String corre2 ="jrojas@deltec.com.co";
 
 
 
